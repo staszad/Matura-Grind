@@ -78,7 +78,7 @@ bool zad802(int a, int b, int c) {
     if (max == a)
         return (b + c > a);
     if (max == b)
-        return (a +c > b);
+        return (a + c > b);
     return (a + b > c);
 }
 
@@ -140,6 +140,38 @@ int main()
     std::cout << std::endl;
 
     //ZADANIE 80.2
+    //sorting vector desc
+    bool sorted = false;
+    while (!sorted) {
+        sorted = true;
+        for (int i = 0; i < trSides.size() - 1; i++) {
+            if (trSides[i + 1] > trSides[i]) {
+                sorted = false;
+                tmp = trSides[i + 1];
+                trSides[i + 1] = trSides[i];
+                trSides[i] = tmp;
+            }
+        }
+    }
+
+    for (int i = 0; i < trSides.size() - 2; i++) {
+        if (zad802(trSides[i], trSides[i + 1], trSides[i + 2])) {
+            std::cout << "zad 80.2: " << trSides[i] + trSides[i + 1] + trSides[i + 2] << "\n";
+            break;
+        }
+    }
+
+    //ZADANIE 80.3
+    int numOfTriangles = 0;
+    for (int i = 0; i < trSides.size() - 2; i++) {
+        for (int j = i + 1; j < trSides.size() - 2; j++) {
+            for (int k = j + 1; k < trSides.size(); k++) {
+                if (zad802(trSides[i], trSides[j], trSides[k]))
+                    numOfTriangles++;
+            }
+        }
+    }
+    std::cout << "zad 80.2: " << numOfTriangles << "\n";
 
 }
 
