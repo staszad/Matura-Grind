@@ -82,6 +82,49 @@ bool zad802(int a, int b, int c) {
     return (a + b > c);
 }
 
+bool zad721(std::string text1, std::string text2) {
+    int len1 = text1.length();
+    int len2 = text2.length();
+    if (len2 > len1) {
+        int tmp = len1;
+        len1 = len2;
+        len2 = tmp;
+    }
+
+    return (len1 / len2 >= 3);
+}
+
+int zad722(std::string text1, std::string text2) {
+    int len1 = text1.length();
+    int len2 = text2.length();
+    if (len1 == len2)
+        return 0;
+
+    int i;
+    for (i = 0; (i < len1 && i < len2); i++) {
+        if (text1[i] != text2[i]){
+            return 0;
+        }
+    }
+    
+    if (len1 > len2)
+        return 1;
+    else
+        return 2;
+}
+
+int zad723(std::string text1, std::string text2) {
+    int len1 = text1.length();
+    int len2 = text2.length();
+
+    int i;
+    for (i = 1; (i <= len1 && i <= len2); i++) {
+        if (text1[len1 - i] != text2[len2 - i])
+            return i - 1;
+    }
+    return i - 1;
+}
+
 int main()
 {
     std::cout << "Hello World!\n";
@@ -94,7 +137,7 @@ int main()
     while (in >> tmp)
         numbers.push_back(tmp);
     
-    //int result591 = 0;
+    //int result591 = 0;  
     //for (int i = 0; i < numbers.size(); i++) {
     //    if (zad591(numbers[i]))
     //        result591++;
@@ -131,47 +174,103 @@ int main()
         trSides.push_back(tmp);
     in.close();
 
-    //ZADANIE 80.1
-    std::cout << "zad 80.1: ";
-    for (int i = 0; i < trSides.size() - 2; i++) {
-        if (zad801(trSides[i], trSides[i + 1], trSides[i + 2]))
-            std::cout << trSides[i] << " " << trSides[i+1] << " " << trSides[i+2] << "; ";
-    }
-    std::cout << std::endl;
+    ////ZADANIE 80.1
+    //std::cout << "zad 80.1: ";
+    //for (int i = 0; i < trSides.size() - 2; i++) {
+    //    if (zad801(trSides[i], trSides[i + 1], trSides[i + 2]))
+    //        std::cout << trSides[i] << " " << trSides[i+1] << " " << trSides[i+2] << "; ";
+    //}
+    //std::cout << std::endl;
 
-    //ZADANIE 80.2
-    //sorting vector desc
-    bool sorted = false;
-    while (!sorted) {
-        sorted = true;
-        for (int i = 0; i < trSides.size() - 1; i++) {
-            if (trSides[i + 1] > trSides[i]) {
-                sorted = false;
-                tmp = trSides[i + 1];
-                trSides[i + 1] = trSides[i];
-                trSides[i] = tmp;
-            }
+    ////ZADANIE 80.2
+    ////sorting vector desc
+    //bool sorted = false;
+    //while (!sorted) {
+    //    sorted = true;
+    //    for (int i = 0; i < trSides.size() - 1; i++) {
+    //        if (trSides[i + 1] > trSides[i]) {
+    //            sorted = false;
+    //            tmp = trSides[i + 1];
+    //            trSides[i + 1] = trSides[i];
+    //            trSides[i] = tmp;
+    //        }
+    //    }
+    //}
+
+    //for (int i = 0; i < trSides.size() - 2; i++) {
+    //    if (zad802(trSides[i], trSides[i + 1], trSides[i + 2])) {
+    //        std::cout << "zad 80.2: " << trSides[i] + trSides[i + 1] + trSides[i + 2] << "\n";
+    //        break;
+    //    }
+    //}
+
+    ////ZADANIE 80.3
+    //int numOfTriangles = 0;
+    //for (int i = 0; i < trSides.size() - 2; i++) {
+    //    for (int j = i + 1; j < trSides.size() - 2; j++) {
+    //        for (int k = j + 1; k < trSides.size(); k++) {
+    //            if (zad802(trSides[i], trSides[j], trSides[k]))
+    //                numOfTriangles++;
+    //        }
+    //    }
+    //}
+    //std::cout << "zad 80.3: " << numOfTriangles << "\n";
+
+    //ZADANIE 72
+    in.open("data/napisy.txt");
+    std::vector<std::string> texts;
+    std::string tmpText;
+    while (in >> tmpText) {
+        texts.push_back(tmpText);
+    }
+    in.close();
+
+    //ZADANIE 72.1
+    int result72 = 0;
+    std::string firstPair = "";
+    for (int i = 0; i < texts.size(); i += 2) {
+        if (zad721(texts[i], texts[i+1])) {
+            result72++;
+            if (firstPair == "")
+                firstPair += texts[i] + " " + texts[i+1];
+        }
+    }
+    std::cout << "zad 72.1: " << result72 << ", pierwsza taka para: " << firstPair << "\n";
+
+    //ZADANIE 72.2
+    std::cout << "\nzad 72.2:\n";
+    for (int i = 0; i < texts.size(); i+=2) {
+        if (zad722(texts[i], texts[i+1]) == 2) {
+            std::cout << texts[i] << " " << texts[i + 1] << " ";
+            for (int j = texts[i].length(); j < texts[i+1].length(); j++)
+                std::cout << texts[i+1][j];
+            std::cout << std::endl;
+        }
+        if (zad722(texts[i], texts[i + 1]) == 1) {
+            std::cout << texts[i] << " " << texts[i + 1] << " ";
+            for (int j = texts[i+1].length(); j < texts[i].length(); j++)
+                std::cout << texts[i][j];
+            std::cout << std::endl;
         }
     }
 
-    for (int i = 0; i < trSides.size() - 2; i++) {
-        if (zad802(trSides[i], trSides[i + 1], trSides[i + 2])) {
-            std::cout << "zad 80.2: " << trSides[i] + trSides[i + 1] + trSides[i + 2] << "\n";
-            break;
-        }
+    //ZADANIE 72.3
+    std::vector<std::string> sameEnds;
+    int maxEndLen = 1;
+    for (int i = 0; i < texts.size(); i += 2) {
+        int endLen = zad723(texts[i], texts[i + 1]);
+        if (endLen > maxEndLen) {
+            maxEndLen = endLen;
+            sameEnds.clear();
+            sameEnds.push_back(texts[i] + " " + texts[i + 1]);
+        } else if (endLen == maxEndLen)
+            sameEnds.push_back(texts[i] + " " + texts[i + 1]);
     }
 
-    //ZADANIE 80.3
-    int numOfTriangles = 0;
-    for (int i = 0; i < trSides.size() - 2; i++) {
-        for (int j = i + 1; j < trSides.size() - 2; j++) {
-            for (int k = j + 1; k < trSides.size(); k++) {
-                if (zad802(trSides[i], trSides[j], trSides[k]))
-                    numOfTriangles++;
-            }
-        }
+    std::cout << "zad72.3: " << maxEndLen << std::endl;
+    for (int i = 0; i < sameEnds.size(); i++) {
+        std::cout << sameEnds[i] << std::endl;
     }
-    std::cout << "zad 80.2: " << numOfTriangles << "\n";
 
 }
 
