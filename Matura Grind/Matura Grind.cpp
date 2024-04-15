@@ -267,7 +267,7 @@ int main()
             sameEnds.push_back(texts[i] + " " + texts[i + 1]);
     }
 
-    std::cout << "zad72.3: " << maxEndLen << std::endl;
+    std::cout << "\nzad72.3: " << maxEndLen << std::endl;
     for (int i = 0; i < sameEnds.size(); i++) {
         std::cout << sameEnds[i] << std::endl;
     }
